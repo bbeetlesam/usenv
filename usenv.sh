@@ -7,11 +7,13 @@ usenv() {
   elif [ "$1" = "set" ]; then
     if [ -z "$2" ]; then
       echo "usenv: missing the .env file argument."
+      return 1
     else
       local envfile="$ENV_DIR/$2.env"
       if [ -f "$envfile" ]; then 
         source "$envfile"
-        echo "Loaded environment: $envfile.env"
+        echo "Loaded environment: $envfile"
+        return 0
       else
         echo "No '$2.env' file found in '$ENV_DIR'"
         return 1
