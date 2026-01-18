@@ -1,6 +1,8 @@
 export ENV_DIR="$ENV"
 
 usenv() {
+  local VERSION="v0.0.0" # what version? who knows.
+
   if [ -z "$1" ]; then
     echo "$0: Missing command."
     return 1
@@ -26,7 +28,16 @@ usenv() {
   elif [ "$1" = "list" ]; then
     find "$ENV_DIR" -maxdepth 1 -type f -name "*.env"
   elif [ "$1" = "help" ]; then
-    echo "by the beatles"
+    print "Deadass simple environment variable set loader and manager.\n$VERSION
+    \nUSAGE: usenv <command> <args>\n\nCOMMANDS:
+    set         Load environment variables from an .env file into the current shell
+    unset       Remove environment variables previously loaded from an .env file
+    list        List all available .env files in the configured path
+    path        Set or display the path of the .env directory. Default to \$ENV
+    help        Show this very informational message\n\nEXAMPLES:
+    usenv set db
+    usenv unset db
+    usenv path \"\$HOME/.env\"" | sed '/^ /s/^ //'
   else
     echo "$0: Unknown command."
     return 1
